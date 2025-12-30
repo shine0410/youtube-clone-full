@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23FF0000' d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/></svg>">
+    <title>YouTube 2025 - Futuristic Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,1262 +15,1374 @@
         }
 
         :root {
-            --yt-spec-base-background: #0f0f0f;
-            --yt-spec-raised-background: #212121;
-            --yt-spec-menu-background: #282828;
-            --yt-spec-text-primary: #f1f1f1;
-            --yt-spec-text-secondary: #aaaaaa;
-            --yt-spec-text-disabled: #717171;
-            --yt-spec-icon-inactive: #909090;
-            --yt-spec-icon-active-other: #3ea6ff;
-            --yt-spec-brand-button-background: #cc0000;
-            --yt-spec-call-to-action: #3ea6ff;
-            --yt-spec-suggested-action: #263850;
-            --yt-spec-error-indicator: #ff4e45;
-            --yt-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
-            --yt-spec-snackbar-background: #f1f1f1;
-            --yt-spec-snackbar-text: #0d0d0d;
-            --yt-spec-badge-chip-background: rgba(255, 255, 255, 0.15);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-glass: rgba(18, 18, 26, 0.7);
+            --accent-primary: #00f0ff;
+            --accent-secondary: #ff00ff;
+            --accent-gradient: linear-gradient(135deg, #00f0ff 0%, #ff00ff 100%);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-glow: rgba(0, 240, 255, 0.3);
+            --shadow-glow: 0 0 30px rgba(0, 240, 255, 0.3);
+            --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         body {
-            font-family: "Roboto", "Arial", sans-serif;
-            background-color: var(--yt-spec-base-background);
-            color: var(--yt-spec-text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 100%);
+            color: var(--text-primary);
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Header */
-        #masthead {
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 56px;
-            background-color: var(--yt-spec-base-background);
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
-            z-index: 2020;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
-        #start {
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
-            flex: 0 1 auto;
+            gap: 24px;
         }
 
-        #guide-button {
-            width: 40px;
-            height: 40px;
-            padding: 8px;
+        .menu-btn {
+            width: 48px;
+            height: 48px;
             border: none;
-            background: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
             cursor: pointer;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
         }
 
-        #guide-button:hover {
-            background-color: var(--yt-spec-10-percent-layer);
+        .menu-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.05);
         }
 
-        #guide-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--yt-spec-text-primary);
-        }
-
-        #logo {
+        .logo {
             display: flex;
             align-items: center;
-            text-decoration: none;
-            padding: 18px 14px 18px 16px;
-            margin-left: -16px;
+            gap: 12px;
+            cursor: pointer;
+            padding: 12px 20px;
+            background: var(--accent-gradient);
+            border-radius: 16px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        #logo:hover {
-            background-color: var(--yt-spec-10-percent-layer);
-            border-radius: 4px;
-        }
-
-        #country-code {
-            font-size: 10px;
-            color: var(--yt-spec-text-secondary);
-            margin-left: 4px;
-        }
-
-        #center {
-            flex: 0 1 732px;
-            display: flex;
-            align-items: center;
-            min-width: 0;
-        }
-
-        #search-form {
-            display: flex;
-            flex: 1;
-            max-width: 640px;
-            height: 40px;
-        }
-
-        #search-input {
-            flex: 1;
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
             height: 100%;
-            padding: 0 4px 0 16px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #00f0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .header-center {
+            flex: 1;
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 40px;
+        }
+
+        .search-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 50px;
+            padding: 0 60px 0 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 25px;
+            color: var(--text-primary);
             font-size: 16px;
-            line-height: 24px;
-            background-color: var(--yt-spec-base-background);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-right: none;
-            border-radius: 40px 0 0 40px;
-            color: var(--yt-spec-text-primary);
             outline: none;
+            transition: all 0.3s;
         }
 
-        #search-input:focus {
-            border-color: var(--yt-spec-call-to-action);
+        .search-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        #search-input::placeholder {
-            color: var(--yt-spec-text-secondary);
+        .search-input::placeholder {
+            color: var(--text-secondary);
         }
 
-        #search-icon-legacy {
-            width: 64px;
-            height: 100%;
-            padding: 1px 6px 0 0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-left: none;
-            border-radius: 0 40px 40px 0;
-            background-color: rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        #search-icon-legacy:hover {
-            background-color: rgba(255, 255, 255, 0.12);
-        }
-
-        #voice-search-button {
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 40px;
             height: 40px;
-            margin-left: 8px;
-            padding: 8px;
             border: none;
-            background-color: var(--yt-spec-badge-chip-background);
+            background: var(--accent-gradient);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
         }
 
-        #voice-search-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
 
-        #end {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 0 1 auto;
-        }
-
-        .yt-icon-button {
-            width: 40px;
-            height: 40px;
-            padding: 8px;
+        .ai-search-btn {
+            width: 50px;
+            height: 50px;
             border: none;
-            background: none;
-            cursor: pointer;
+            background: linear-gradient(135deg, #ff00ff 0%, #00f0ff 100%);
             border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+            animation: pulse 3s infinite;
         }
 
-        .yt-icon-button:hover {
-            background-color: var(--yt-spec-10-percent-layer);
-        }
-
-        #avatar-btn {
-            width: 32px;
-            height: 32px;
+        .ai-search-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--accent-gradient);
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+
+        .ai-search-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.05);
+        }
+
+        .icon-btn.has-notification::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ff0055;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
         }
 
         /* Sidebar */
-        #guide-inner-content {
+        .sidebar {
             position: fixed;
-            top: 56px;
             left: 0;
+            top: 70px;
             bottom: 0;
-            width: 240px;
-            background-color: var(--yt-spec-base-background);
+            width: 280px;
+            background: rgba(18, 18, 26, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-right: 1px solid rgba(0, 240, 255, 0.1);
             overflow-y: auto;
-            overflow-x: hidden;
-            z-index: 2010;
-            transition: transform 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 900;
+            animation: slideInLeft 0.5s ease-out;
         }
 
-        #guide-inner-content.hidden {
-            transform: translateX(-240px);
+        .sidebar.closed {
+            transform: translateX(-280px);
         }
 
-        #guide-inner-content::-webkit-scrollbar {
-            width: 8px;
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
         }
 
-        #guide-inner-content::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        #guide-inner-content::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.3);
+            border-radius: 3px;
         }
 
-        .guide-section {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 240, 255, 0.5);
         }
 
-        .guide-entry {
+        .sidebar-section {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .sidebar-item {
             display: flex;
             align-items: center;
-            height: 40px;
-            padding: 0 24px;
+            padding: 14px 24px;
             cursor: pointer;
+            transition: all 0.3s;
             position: relative;
-        }
-
-        .guide-entry:hover {
-            background-color: var(--yt-spec-10-percent-layer);
-        }
-
-        .guide-entry.active {
-            background-color: var(--yt-spec-10-percent-layer);
-            font-weight: 500;
-        }
-
-        .guide-entry.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background-color: var(--yt-spec-text-primary);
-        }
-
-        .guide-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 24px;
-            fill: var(--yt-spec-text-primary);
-        }
-
-        .guide-entry-title {
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 400;
-        }
-
-        .guide-section-title {
-            padding: 8px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--yt-spec-text-secondary);
-        }
-
-        .guide-subscriptions-section .guide-entry {
-            padding-left: 12px;
-        }
-
-        .guide-channel-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Main Content */
-        #page-manager {
-            margin-left: 240px;
-            margin-top: 56px;
-            padding: 24px 24px 0;
-            transition: margin-left 0.2s;
-        }
-
-        #page-manager.guide-hidden {
-            margin-left: 72px;
-        }
-
-        /* Chips Bar */
-        #chips-wrapper {
-            position: sticky;
-            top: 56px;
-            background-color: var(--yt-spec-base-background);
-            padding: 12px 0;
-            margin: -24px -24px 24px;
-            padding-left: 24px;
-            z-index: 1000;
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
-        }
-
-        #chips-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .yt-chip {
-            display: inline-flex;
-            align-items: center;
-            height: 32px;
-            padding: 0 12px;
-            margin-right: 12px;
-            background-color: var(--yt-spec-badge-chip-background);
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--yt-spec-text-primary);
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .yt-chip:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .yt-chip.active {
-            background-color: var(--yt-spec-text-primary);
-            color: var(--yt-spec-base-background);
-        }
-
-        /* Video Grid */
-        #contents {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 40px 16px;
-        }
-
-        ytd-rich-item-renderer {
-            display: block;
-        }
-
-        #dismissible {
-            cursor: pointer;
-        }
-
-        ytd-thumbnail {
-            position: relative;
-            display: block;
-            width: 100%;
-        }
-
-        #thumbnail {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            overflow: hidden;
+            margin: 4px 12px;
             border-radius: 12px;
         }
 
-        #thumbnail img {
+        .sidebar-item:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateX(8px);
+        }
+
+        .sidebar-item.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-left: 3px solid var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .sidebar-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 20px;
+            fill: var(--accent-primary);
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+        }
+
+        .sidebar-label {
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .sidebar-section-title {
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: calc(100vh - 70px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content.sidebar-closed {
+            margin-left: 0;
+        }
+
+        /* AI Assistant Banner */
+        .ai-banner {
+            background: var(--accent-gradient);
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(0, 240, 255, 0.3);
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .ai-banner-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-banner h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .ai-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .ai-btn {
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Category Chips */
+        .chips-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 16px 0;
+            margin-bottom: 32px;
+            scrollbar-width: none;
+        }
+
+        .chips-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chip {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .chip:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+        }
+
+        .chip.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .video-card {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .video-card:nth-child(1) { animation-delay: 0.1s; }
+        .video-card:nth-child(2) { animation-delay: 0.2s; }
+        .video-card:nth-child(3) { animation-delay: 0.3s; }
+        .video-card:nth-child(4) { animation-delay: 0.4s; }
+        .video-card:nth-child(5) { animation-delay: 0.5s; }
+        .video-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .video-card:hover {
+            transform: translateY(-12px) scale(1.02);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .video-card:hover .video-thumbnail {
+            border-color: var(--accent-primary);
+            box-shadow: 0 12px 40px rgba(0, 240, 255, 0.4);
+        }
+
+        .video-thumbnail img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.2s;
+            transition: all 0.4s;
         }
 
-        #dismissible:hover #thumbnail img {
-            transform: scale(1.05);
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.1);
         }
 
-        #time-status {
+        .video-duration {
             position: absolute;
-            bottom: 4px;
-            right: 4px;
-            padding: 3px 4px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 2px;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 12px;
-            color: #fff;
+            bottom: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 240, 255, 0.3);
         }
 
-        .badge-style-type-live-now {
+        .live-badge {
             position: absolute;
-            top: 4px;
-            left: 4px;
-            padding: 2px 4px;
-            background-color: var(--yt-spec-error-indicator);
-            border-radius: 2px;
+            top: 12px;
+            left: 12px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #ff0055 0%, #ff4400 100%);
+            border-radius: 8px;
             font-size: 12px;
-            font-weight: 500;
-            line-height: 12px;
-            color: #fff;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
         }
 
-        #details {
+        .ai-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: var(--accent-gradient);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .video-info {
             display: flex;
-            margin-top: 12px;
+            gap: 14px;
+            margin-top: 16px;
         }
 
-        #avatar {
-            width: 36px;
-            height: 36px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        #avatar img {
-            width: 100%;
-            height: 100%;
+        .channel-avatar {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        #meta {
-            flex: 1;
-            min-width: 0;
-        }
-
-        #video-title {
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
-            color: var(--yt-spec-text-primary);
-            max-height: 40px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            margin-bottom: 4px;
-        }
-
-        #metadata-line {
-            font-size: 12px;
-            line-height: 18px;
-            color: var(--yt-spec-text-secondary);
-        }
-
-        #channel-name {
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        #metadata {
-            display: flex;
-            align-items: center;
-        }
-
-        .inline-metadata-item {
-            display: inline;
-        }
-
-        .inline-metadata-item:not(:last-child)::after {
-            content: '•';
-            margin: 0 4px;
-        }
-
-        /* Video Player Page */
-        #player-page {
-            display: none;
-            margin-left: 240px;
-            margin-top: 56px;
-            transition: margin-left 0.2s;
-        }
-
-        #player-page.active {
-            display: block;
-        }
-
-        #player-page.guide-hidden {
-            margin-left: 72px;
-        }
-
-        #player-container {
-            display: grid;
-            grid-template-columns: 1fr 402px;
-            gap: 24px;
-            padding: 24px;
-        }
-
-        #primary {
-            min-width: 0;
-        }
-
-        #player {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            background-color: #000;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        #player video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #primary-inner {
-            margin-top: 12px;
-        }
-
-        #above-the-fold {
-            padding: 20px 0 8px;
-        }
-
-        #title h1 {
-            font-size: 20px;
-            line-height: 28px;
-            font-weight: 600;
-            color: var(--yt-spec-text-primary);
-        }
-
-        #info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 12px;
-        }
-
-        #info-contents {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        #owner {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        #channel-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        #img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--accent-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .video-card:hover .channel-avatar {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        }
+
+        .video-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            letter-spacing: 0.2px;
+        }
+
+        .video-channel {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
             font-weight: 500;
         }
 
-        #text-container {
+        .video-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-dot {
+            width: 3px;
+            height: 3px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+        }
+
+        /* Video Player Page */
+        .player-page {
+            display: none;
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 32px;
+            transition: all 0.4s;
+        }
+
+        .player-page.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .player-page.sidebar-closed {
+            margin-left: 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .player-container {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 32px;
+        }
+
+        .player-primary {
+            min-width: 0;
+        }
+
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .player-info {
+            margin-top: 24px;
+        }
+
+        .player-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .player-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .channel-info-player {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .channel-avatar-large {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .channel-details {
             display: flex;
             flex-direction: column;
         }
 
-        #channel-name-player {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 20px;
-            color: var(--yt-spec-text-primary);
+        .channel-name-player {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
-        #subscriber-count {
-            font-size: 12px;
-            line-height: 18px;
-            color: var(--yt-spec-text-secondary);
+        .subscriber-count {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
-        #subscribe-button {
-            margin-left: 24px;
-            padding: 10px 16px;
-            background-color: var(--yt-spec-text-primary);
-            color: var(--yt-spec-base-background);
+        .subscribe-btn {
+            padding: 12px 32px;
+            background: var(--accent-gradient);
             border: none;
-            border-radius: 18px;
-            font-size: 14px;
-            font-weight: 500;
+            border-radius: 24px;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+            margin-left: 16px;
         }
 
-        #subscribe-button:hover {
-            background-color: #d9d9d9;
+        .subscribe-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 240, 255, 0.6);
         }
 
-        #top-level-buttons {
+        .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .yt-button-shape {
+        .action-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background-color: var(--yt-spec-badge-chip-background);
-            border: none;
-            border-radius: 18px;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            color: var(--text-primary);
+            font-weight: 600;
             font-size: 14px;
-            font-weight: 500;
-            color: var(--yt-spec-text-primary);
             cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .yt-button-shape:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        .action-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 240, 255, 0.3);
         }
 
-        #description {
-            margin-top: 12px;
-            padding: 12px;
-            background-color: var(--yt-spec-badge-chip-background);
-            border-radius: 12px;
+        .description-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 16px;
         }
 
-        #description-inner {
-            font-size: 14px;
-            line-height: 20px;
-            color: var(--yt-spec-text-primary);
-        }
-
-        #info-text {
+        .description-header {
             display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-weight: 500;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .description-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
         }
 
         /* Comments */
-        #comments {
-            margin-top: 24px;
+        .comments-section {
+            margin-top: 32px;
         }
 
-        #header-comments {
+        .comments-header {
             display: flex;
             align-items: center;
             gap: 32px;
             margin-bottom: 24px;
         }
 
-        #count {
+        .comments-count {
             font-size: 20px;
-            font-weight: 500;
+            font-weight: 700;
         }
 
-        #sort-menu {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            color: var(--yt-spec-text-secondary);
-        }
-
-        #simple-box {
+        .comment-input-box {
             display: flex;
             gap: 16px;
             margin-bottom: 32px;
         }
 
-        #author-thumbnail {
-            width: 40px;
-            height: 40px;
+        .comment-input {
+            flex: 1;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .comment-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .comment {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .comment:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.2);
+        }
+
+        .comment-avatar {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--accent-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 2px solid rgba(0, 240, 255, 0.3);
         }
 
-        #placeholder-area {
+        .comment-content {
             flex: 1;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 0;
         }
 
-        #placeholder-area input {
-            width: 100%;
-            background: none;
-            border: none;
-            color: var(--yt-spec-text-primary);
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .comment-author {
+            font-weight: 700;
             font-size: 14px;
-            outline: none;
         }
 
-        #placeholder-area input::placeholder {
-            color: var(--yt-spec-text-secondary);
+        .comment-time {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
-        ytd-comment-thread-renderer {
-            display: block;
-            margin-bottom: 16px;
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
         }
 
-        #comment {
+        .comment-actions {
             display: flex;
             gap: 16px;
         }
 
-        #author-thumbnail-comment {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        #body {
-            flex: 1;
-        }
-
-        #header-author {
+        .comment-action {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        #author-text {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        #published-time-text {
-            font-size: 12px;
-            color: var(--yt-spec-text-secondary);
-        }
-
-        #content-text {
-            font-size: 14px;
-            line-height: 20px;
-            color: var(--yt-spec-text-primary);
-            margin-bottom: 8px;
-        }
-
-        #action-buttons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        #like-button, #dislike-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px;
-            background: none;
-            border: none;
-            color: var(--yt-spec-text-secondary);
-            cursor: pointer;
-            border-radius: 18px;
-        }
-
-        #like-button:hover, #dislike-button:hover {
-            background-color: var(--yt-spec-10-percent-layer);
-        }
-
-        #reply-button {
-            padding: 8px 16px;
-            background: none;
-            border: none;
-            color: var(--yt-spec-text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 18px;
-        }
-
-        #reply-button:hover {
-            background-color: var(--yt-spec-10-percent-layer);
-        }
-
-        /* Secondary (Related Videos) */
-        #secondary {
-            overflow-y: auto;
-            max-height: calc(100vh - 100px);
-        }
-
-        #secondary::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #secondary::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        ytd-compact-video-renderer {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            padding: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        ytd-compact-video-renderer:hover {
-            background-color: var(--yt-spec-10-percent-layer);
+        .comment-action:hover {
+            background: rgba(0, 240, 255, 0.1);
         }
 
-        #thumbnail-compact {
-            position: relative;
+        /* Related Videos */
+        .related-videos {
+            overflow-y: auto;
+            max-height: calc(100vh - 150px);
+        }
+
+        .related-videos::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .related-videos::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .related-video {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .related-video:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        .related-thumbnail {
             width: 168px;
             height: 94px;
-            flex-shrink: 0;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 240, 255, 0.2);
         }
 
-        #thumbnail-compact img {
+        .related-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        #time-status-compact {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            padding: 2px 4px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 2px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #fff;
-        }
-
-        #details-compact {
+        .related-info {
             flex: 1;
             min-width: 0;
         }
 
-        #video-title-compact {
+        .related-title {
             font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
-            color: var(--yt-spec-text-primary);
-            max-height: 40px;
-            overflow: hidden;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 6px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-channel {
+            font-size: 12px;
+            color: var(--text-secondary);
             margin-bottom: 4px;
         }
 
-        #channel-name-compact {
+        .related-meta {
             font-size: 12px;
-            line-height: 18px;
-            color: var(--yt-spec-text-secondary);
-            margin-bottom: 2px;
-        }
-
-        #metadata-compact {
-            font-size: 12px;
-            line-height: 18px;
-            color: var(--yt-spec-text-secondary);
+            color: var(--text-secondary);
         }
 
         /* Responsive */
-        @media (max-width: 1280px) {
-            #player-container {
+        @media (max-width: 1400px) {
+            .player-container {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 1024px) {
-            #guide-inner-content {
-                transform: translateX(-240px);
+            .sidebar {
+                transform: translateX(-280px);
             }
 
-            #page-manager, #player-page {
+            .main-content, .player-page {
                 margin-left: 0;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
         }
 
         @media (max-width: 768px) {
-            #contents {
-                grid-template-columns: 1fr;
+            .header-center {
+                margin: 0 16px;
             }
 
-            #voice-search-button {
+            .ai-search-btn {
                 display: none;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles -->
+    <div class="particle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+    <div class="particle" style="top: 60%; left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="top: 40%; left: 90%; animation-delay: 4s;"></div>
+
     <!-- Header -->
-    <div id="masthead">
-        <div id="start">
-            <button id="guide-button" onclick="toggleGuide()">
-                <svg id="guide-icon" viewBox="0 0 24 24">
-                    <path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"/>
+    <div class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
             </button>
-            <a id="logo" href="#" onclick="showHome()">
+            <div class="logo" onclick="showHome()">
                 <svg viewBox="0 0 90 20" width="90" height="20">
-                    <path fill="#FF0000" d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 0 14.285 0 14.285 0C14.285 0 5.35042 0 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C0 5.35042 0 10 0 10C0 10 0 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z"/>
-                    <path fill="#FFFFFF" d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z"/>
+                    <path fill="#FFFFFF" d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 0 14.285 0 14.285 0C14.285 0 5.35042 0 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C0 5.35042 0 10 0 10C0 10 0 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z"/>
+                    <path fill="#00f0ff" d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z"/>
                 </svg>
-                <span id="country-code">IN</span>
-            </a>
+                <span class="logo-text">2025</span>
+            </div>
         </div>
 
-        <div id="center">
-            <form id="search-form" onsubmit="performSearch(event)">
-                <input id="search-input" type="text" placeholder="Search" autocomplete="off">
-                <button id="search-icon-legacy" type="submit">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
-                        <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"/>
+        <div class="header-center">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search with AI...">
+                <button class="search-btn" onclick="performSearch()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     </svg>
                 </button>
-            </form>
-            <button id="voice-search-button">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
+            </div>
+            <button class="ai-search-btn" title="AI Voice Search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                     <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
                     <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
                 </svg>
             </button>
         </div>
 
-        <div id="end">
-            <button class="yt-icon-button">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
+        <div class="header-right">
+            <button class="icon-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
                 </svg>
             </button>
-            <button class="yt-icon-button">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
-                    <path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42l-2-1.88v-5.47c0-2.47-1.19-4.36-3.13-5.1-1.26-.53-2.64-.5-3.84.03C8.15 6.11 7 7.99 7 10.42v5.47l-2 1.88V18h14v-.23z"/>
+            <button class="icon-btn has-notification">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
                 </svg>
             </button>
-            <div id="avatar-btn">AP</div>
+            <div class="user-avatar">AP</div>
         </div>
     </div>
 
     <!-- Sidebar -->
-    <div id="guide-inner-content">
-        <div class="guide-section">
-            <div class="guide-entry active" onclick="showHome()">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4zm1-1h4v-6h6v6h4v-9.92l-7-6.09-7 6.09V20z"/>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-item active" onclick="showHome()">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
+                    <path d="M12 4.44l-6 5.4V19h4v-5h4v5h4v-9.16l-6-5.4M12 3l8 7.2V21h-6v-5h-4v5H4v-10.8L12 3z"/>
                 </svg>
-                <span class="guide-entry-title">Home</span>
+                <span class="sidebar-label">Home</span>
             </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
+            <div class="sidebar-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
                     <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25z"/>
                 </svg>
-                <span class="guide-entry-title">Shorts</span>
+                <span class="sidebar-label">Shorts</span>
             </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
+            <div class="sidebar-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
                     <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"/>
                 </svg>
-                <span class="guide-entry-title">Subscriptions</span>
+                <span class="sidebar-label">Subscriptions</span>
             </div>
         </div>
 
-        <div class="guide-section">
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M11 7l-3 3 3 3V7zm13 3l-3-3v6l3-3zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">AI Features</div>
+            <div class="sidebar-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
                 </svg>
-                <span class="guide-entry-title">You</span>
+                <span class="sidebar-label">AI Recommendations</span>
             </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M14.97 16.95 10 13.87V7h2v5.76l4.03 2.49-1.06 1.7zM12 3c-4.96 0-9 4.04-9 9s4.04 9 9 9 9-4.04 9-9-4.04-9-9-9m0-1c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
+            <div class="sidebar-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
                 </svg>
-                <span class="guide-entry-title">History</span>
+                <span class="sidebar-label">AI Chat</span>
+            </div>
+            <div class="sidebar-item">
+                <svg class="sidebar-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                </svg>
+                <span class="sidebar-label">Watch History</span>
             </div>
         </div>
 
-        <div class="guide-section guide-subscriptions-section">
-            <div class="guide-section-title">Subscriptions</div>
-            <div class="guide-entry">
-                <div class="guide-channel-thumb">T</div>
-                <span class="guide-entry-title">Tech Academy</span>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Subscriptions</div>
+            <div class="sidebar-item">
+                <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 20px;">T</div>
+                <span class="sidebar-label">Tech Academy</span>
             </div>
-            <div class="guide-entry">
-                <div class="guide-channel-thumb">C</div>
-                <span class="guide-entry-title">Code Masters</span>
+            <div class="sidebar-item">
+                <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 20px;">C</div>
+                <span class="sidebar-label">Code Masters</span>
             </div>
-            <div class="guide-entry">
-                <div class="guide-channel-thumb">D</div>
-                <span class="guide-entry-title">Design Pro</span>
-            </div>
-            <div class="guide-entry">
-                <div class="guide-channel-thumb">A</div>
-                <span class="guide-entry-title">AI Learning</span>
-            </div>
-            <div class="guide-entry">
-                <div class="guide-channel-thumb">W</div>
-                <span class="guide-entry-title">Web Dev Simplified</span>
-            </div>
-        </div>
-
-        <div class="guide-section">
-            <div class="guide-section-title">Explore</div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M19 3.87v9.77C19 17.7 15.86 21 12 21s-7-3.3-7-7.37v-.13c0-1.06.22-2.13.62-3.09.5-1.19 1.29-2.21 2.27-2.97.85-.66 1.83-1.14 2.87-1.65.39-.19.77-.38 1.15-.58.36-.19.72-.38 1.08-.56v3.22l1.55-1.04L19 3.87M20 2l-6 4V3c-.85.44-1.7.88-2.55 1.33-1.41.74-2.9 1.34-4.17 2.32-1.13.87-2.02 2.05-2.58 3.37-.46 1.09-.7 2.29-.7 3.48v.14C4 18.26 7.58 22 12 22s8-3.74 8-8.36V2zM9.45 12.89 14 10v5.7c0 1.82-1.34 3.3-3 3.3s-3-1.47-3-3.3c0-1.19.58-2.23 1.45-2.81z"/>
-                </svg>
-                <span class="guide-entry-title">Trending</span>
-            </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M12 4v9.38c-.73-.84-1.8-1.38-3-1.38-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V8h6V4h-7zM9 19c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm9-12h-5V5h5v2z"/>
-                </svg>
-                <span class="guide-entry-title">Music</span>
-            </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M10 12H8v2H6v-2H4v-2h2V8h2v2h2v2zm7 .5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm3-3c0-.83-.67-1.5-1.5-1.5S17 8.67 17 9.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-3.03-4.35l-1.06 1.06c.98.98 1.59 2.34 1.59 3.79 0 2.97-2.54 5.5-5.5 5.5S6.5 12.97 6.5 10c0-2.96 2.54-5.5 5.5-5.5V3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9c0-2.39-.98-4.55-2.56-6.12l1.06-1.06-1.5-1.5-.03.03z"/>
-                </svg>
-                <span class="guide-entry-title">Gaming</span>
-            </div>
-            <div class="guide-entry">
-                <svg class="guide-icon" viewBox="0 0 24 24">
-                    <path d="M18 5V2H6v3H3v6l3.23 1.61c.7 2.5 2.97 4.34 5.69 4.38L8 19v3h8v-3l-3.92-6.01c2.72-.04 4.99-1.88 5.69-4.38L21 7V5h-3zM6 11.38l-2-1V6h2v5.38zM15 21H9v-1.39l3-4.6 3 4.6V21zm1-11c0 2.76-2.24 5-5 5s-5-2.24-5-5V3h10v7zm3-.62l-2 1V6h2v3.38z"/>
-                </svg>
-                <span class="guide-entry-title">Sports</span>
+            <div class="sidebar-item">
+                <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 20px;">A</div>
+                <span class="sidebar-label">AI Learning</span>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div id="page-manager">
-        <!-- Chips Bar -->
-        <div id="chips-wrapper">
-            <button class="yt-chip active" onclick="filterChip(this, 'all')">All</button>
-            <button class="yt-chip" onclick="filterChip(this, 'programming')">Programming</button>
-            <button class="yt-chip" onclick="filterChip(this, 'web-dev')">Web Development</button>
-            <button class="yt-chip" onclick="filterChip(this, 'design')">Design</button>
-            <button class="yt-chip" onclick="filterChip(this, 'data-science')">Data Science</button>
-            <button class="yt-chip" onclick="filterChip(this, 'ai')">Artificial Intelligence</button>
-            <button class="yt-chip" onclick="filterChip(this, 'devops')">DevOps</button>
-            <button class="yt-chip" onclick="filterChip(this, 'mobile')">Mobile Development</button>
-            <button class="yt-chip" onclick="filterChip(this, 'cloud')">Cloud Computing</button>
-            <button class="yt-chip" onclick="filterChip(this, 'security')">Cybersecurity</button>
+    <div class="main-content" id="mainContent">
+        <!-- AI Banner -->
+        <div class="ai-banner">
+            <div class="ai-banner-content">
+                <h2>🤖 AI-Powered Recommendations</h2>
+                <p>Discover content tailored just for you with our advanced AI engine</p>
+            </div>
+            <button class="ai-btn">Try AI Search</button>
+        </div>
+
+        <!-- Category Chips -->
+        <div class="chips-container">
+            <div class="chip active" onclick="filterCategory(this, 'all')">All</div>
+            <div class="chip" onclick="filterCategory(this, 'programming')">Programming</div>
+            <div class="chip" onclick="filterCategory(this, 'ai')">Artificial Intelligence</div>
+            <div class="chip" onclick="filterCategory(this, 'web-dev')">Web Development</div>
+            <div class="chip" onclick="filterCategory(this, 'design')">Design</div>
+            <div class="chip" onclick="filterCategory(this, 'data-science')">Data Science</div>
+            <div class="chip" onclick="filterCategory(this, 'devops')">DevOps</div>
+            <div class="chip" onclick="filterCategory(this, 'cloud')">Cloud Computing</div>
+            <div class="chip" onclick="filterCategory(this, 'blockchain')">Blockchain</div>
+            <div class="chip" onclick="filterCategory(this, 'quantum')">Quantum Computing</div>
         </div>
 
         <!-- Video Grid -->
-        <div id="contents"></div>
+        <div class="video-grid" id="videoGrid"></div>
     </div>
 
     <!-- Video Player Page -->
-    <div id="player-page">
-        <div id="player-container">
-            <div id="primary">
-                <div id="player">
-                    <video id="video-player" controls></video>
+    <div class="player-page" id="playerPage">
+        <button class="back-btn" onclick="showHome()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back to Home
+        </button>
+
+        <div class="player-container">
+            <div class="player-primary">
+                <div class="video-player">
+                    <video id="videoPlayer" controls></video>
                 </div>
 
-                <div id="primary-inner">
-                    <div id="above-the-fold">
-                        <div id="title">
-                            <h1 id="video-title-player"></h1>
+                <div class="player-info">
+                    <h1 class="player-title" id="playerTitle"></h1>
+
+                    <div class="player-actions">
+                        <div class="channel-info-player">
+                            <div class="channel-avatar-large" id="playerAvatar"></div>
+                            <div class="channel-details">
+                                <div class="channel-name-player" id="playerChannel"></div>
+                                <div class="subscriber-count">1.2M subscribers</div>
+                            </div>
+                            <button class="subscribe-btn">Subscribe</button>
                         </div>
 
-                        <div id="info">
-                            <div id="info-contents">
-                                <div id="owner">
-                                    <div id="channel-info">
-                                        <div id="img"></div>
-                                        <div id="text-container">
-                                            <div id="channel-name-player"></div>
-                                            <div id="subscriber-count">1.2M subscribers</div>
-                                        </div>
-                                    </div>
-                                    <button id="subscribe-button">Subscribe</button>
-                                </div>
-                            </div>
-
-                            <div id="top-level-buttons">
-                                <button class="yt-button-shape" onclick="likeVideo()">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z"/>
-                                    </svg>
-                                    <span id="like-count-player">1.2K</span>
-                                </button>
-                                <button class="yt-button-shape">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                                    </svg>
-                                    Share
-                                </button>
-                                <button class="yt-button-shape">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M22 13h-4v4h-2v-4h-4v-2h4V7h2v4h4v2zm-8-6H2v1h12V7zM2 12h8v-1H2v1zm0 4h8v-1H2v1z"/>
-                                    </svg>
-                                    Save
-                                </button>
-                            </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="likeVideo()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                </svg>
+                                <span id="likeCount">1.2K</span>
+                            </button>
+                            <button class="action-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                                </svg>
+                                Share
+                            </button>
+                            <button class="action-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+                                </svg>
+                                Save
+                            </button>
                         </div>
                     </div>
 
-                    <div id="description">
-                        <div id="description-inner">
-                            <div id="info-text">
-                                <span id="views-player"></span>
-                                <span id="date-player"></span>
-                            </div>
-                            <div id="description-text"></div>
+                    <div class="description-box">
+                        <div class="description-header">
+                            <span id="playerViews"></span>
+                            <span id="playerDate"></span>
                         </div>
+                        <div class="description-text" id="playerDescription"></div>
                     </div>
 
                     <!-- Comments -->
-                    <div id="comments">
-                        <div id="header-comments">
-                            <div id="count">156 Comments</div>
-                            <div id="sort-menu">
-                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                    <path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/>
-                                </svg>
-                                Sort by
+                    <div class="comments-section">
+                        <div class="comments-header">
+                            <div class="comments-count">156 Comments</div>
+                        </div>
+
+                        <div class="comment-input-box">
+                            <div class="channel-avatar">AP</div>
+                            <input type="text" class="comment-input" placeholder="Add a comment...">
+                        </div>
+
+                        <div class="comment">
+                            <div class="comment-avatar">J</div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">@johndoe</span>
+                                    <span class="comment-time">2 days ago</span>
+                                </div>
+                                <div class="comment-text">This is absolutely mind-blowing! The future of tech is here 🚀</div>
+                                <div class="comment-actions">
+                                    <div class="comment-action">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                        </svg>
+                                        24
+                                    </div>
+                                    <div class="comment-action">Reply</div>
+                                </div>
                             </div>
                         </div>
 
-                        <div id="simple-box">
-                            <div id="author-thumbnail">AP</div>
-                            <div id="placeholder-area">
-                                <input type="text" placeholder="Add a comment...">
+                        <div class="comment">
+                            <div class="comment-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">S</div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">@sarahtech</span>
+                                    <span class="comment-time">1 week ago</span>
+                                </div>
+                                <div class="comment-text">The AI features are incredible! This is the future we've been waiting for ✨</div>
+                                <div class="comment-actions">
+                                    <div class="comment-action">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                        </svg>
+                                        12
+                                    </div>
+                                    <div class="comment-action">Reply</div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div id="comments-list">
-                            <ytd-comment-thread-renderer>
-                                <div id="comment">
-                                    <div id="author-thumbnail-comment">J</div>
-                                    <div id="body">
-                                        <div id="header-author">
-                                            <span id="author-text">@johndoe</span>
-                                            <span id="published-time-text">2 days ago</span>
-                                        </div>
-                                        <div id="content-text">This is an amazing tutorial! Really helped me understand the concepts better. Thanks for sharing!</div>
-                                        <div id="action-buttons">
-                                            <button id="like-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z"/>
-                                                </svg>
-                                                <span>24</span>
-                                            </button>
-                                            <button id="dislike-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z"/>
-                                                </svg>
-                                            </button>
-                                            <button id="reply-button">Reply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ytd-comment-thread-renderer>
-
-                            <ytd-comment-thread-renderer>
-                                <div id="comment">
-                                    <div id="author-thumbnail-comment" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">S</div>
-                                    <div id="body">
-                                        <div id="header-author">
-                                            <span id="author-text">@sarahsmith</span>
-                                            <span id="published-time-text">1 week ago</span>
-                                        </div>
-                                        <div id="content-text">Perfect timing! I was just looking for something like this. Subscribed!</div>
-                                        <div id="action-buttons">
-                                            <button id="like-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z"/>
-                                                </svg>
-                                                <span>12</span>
-                                            </button>
-                                            <button id="dislike-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z"/>
-                                                </svg>
-                                            </button>
-                                            <button id="reply-button">Reply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ytd-comment-thread-renderer>
-
-                            <ytd-comment-thread-renderer>
-                                <div id="comment">
-                                    <div id="author-thumbnail-comment" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">M</div>
-                                    <div id="body">
-                                        <div id="header-author">
-                                            <span id="author-text">@mikejohnson</span>
-                                            <span id="published-time-text">3 days ago</span>
-                                        </div>
-                                        <div id="content-text">Could you make a follow-up video covering advanced topics? This was great!</div>
-                                        <div id="action-buttons">
-                                            <button id="like-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z"/>
-                                                </svg>
-                                                <span>8</span>
-                                            </button>
-                                            <button id="dislike-button">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                                    <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z"/>
-                                                </svg>
-                                            </button>
-                                            <button id="reply-button">Reply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ytd-comment-thread-renderer>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Related Videos -->
-            <div id="secondary"></div>
+            <div class="related-videos" id="relatedVideos"></div>
         </div>
     </div>
 
@@ -1276,7 +1390,7 @@
         const videos = [
             {
                 id: 1,
-                title: 'Building a Full Stack Application with React and Node.js - Complete Tutorial 2024',
+                title: 'AI-Powered Web Development in 2025 - Complete Guide',
                 thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=225&fit=crop',
                 channel: 'Tech Academy',
                 channelInitial: 'T',
@@ -1284,235 +1398,172 @@
                 timestamp: '2 days ago',
                 duration: '15:30',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                description: 'Learn how to build a complete full-stack application using React for the frontend and Node.js for the backend. This comprehensive tutorial covers everything from setup to deployment, including authentication, database integration, REST APIs, and best practices for production-ready applications.',
+                description: 'Discover how AI is revolutionizing web development in 2025. Learn about AI-powered code generation, automated testing, and intelligent debugging tools that are changing the game.',
                 category: 'programming',
-                isLive: false
+                isLive: false,
+                hasAI: true
             },
             {
                 id: 2,
-                title: 'Advanced JavaScript Concepts You Need to Know in 2024',
-                thumbnail: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=225&fit=crop',
-                channel: 'Code Masters',
-                channelInitial: 'C',
-                views: '856K views',
+                title: 'Quantum Computing Explained - The Future is Here',
+                thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=225&fit=crop',
+                channel: 'Quantum Labs',
+                channelInitial: 'Q',
+                views: '2.5M views',
                 timestamp: '1 week ago',
                 duration: '22:15',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-                description: 'Deep dive into advanced JavaScript concepts including closures, promises, async/await, event loop, prototypes, and more. Perfect for intermediate developers looking to level up their JavaScript skills.',
-                category: 'programming',
-                isLive: false
+                description: 'Dive deep into quantum computing and understand how it will transform technology in the next decade.',
+                category: 'quantum',
+                isLive: false,
+                hasAI: true
             },
             {
                 id: 3,
-                title: 'CSS Grid and Flexbox - Complete Guide for Modern Layouts',
-                thumbnail: 'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=400&h=225&fit=crop',
-                channel: 'Design Pro',
-                channelInitial: 'D',
-                views: '2.1M views',
-                timestamp: '3 weeks ago',
-                duration: '18:45',
+                title: 'LIVE: Building the Metaverse with AI & Blockchain',
+                thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=225&fit=crop',
+                channel: 'Future Tech',
+                channelInitial: 'F',
+                views: '15K watching',
+                timestamp: 'Live now',
+                duration: 'LIVE',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                description: 'Master modern CSS layout techniques with this complete guide to CSS Grid and Flexbox. Learn when to use each, how to combine them effectively, and build responsive layouts.',
-                category: 'design',
-                isLive: false
+                description: 'Join us live as we build the next generation metaverse using AI and blockchain technology!',
+                category: 'blockchain',
+                isLive: true,
+                hasAI: true
             },
             {
                 id: 4,
-                title: 'Python for Data Science - Beginner to Advanced Complete Course',
-                thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=225&fit=crop',
-                channel: 'Data Science Hub',
-                channelInitial: 'D',
-                views: '3.5M views',
-                timestamp: '1 month ago',
-                duration: '45:20',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-                description: 'Complete Python course for data science covering NumPy, Pandas, Matplotlib, Seaborn, and machine learning basics. Perfect for aspiring data scientists.',
-                category: 'data-science',
-                isLive: false
-            },
-            {
-                id: 5,
-                title: 'Machine Learning Fundamentals Explained - Neural Networks & Deep Learning',
+                title: 'Neural Networks & Deep Learning - Advanced Course 2025',
                 thumbnail: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=225&fit=crop',
                 channel: 'AI Learning',
                 channelInitial: 'A',
-                views: '987K views',
+                views: '3.8M views',
+                timestamp: '3 days ago',
+                duration: '45:20',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                description: 'Master neural networks and deep learning with this comprehensive 2025 course covering the latest advancements.',
+                category: 'ai',
+                isLive: false,
+                hasAI: true
+            },
+            {
+                id: 5,
+                title: 'Cloud Native Architecture - Kubernetes & Beyond',
+                thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=225&fit=crop',
+                channel: 'Cloud Masters',
+                channelInitial: 'C',
+                views: '1.9M views',
                 timestamp: '5 days ago',
                 duration: '32:10',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-                description: 'Understanding machine learning from the ground up. Learn about supervised learning, unsupervised learning, neural networks, and deep learning fundamentals.',
-                category: 'ai',
-                isLive: false
+                description: 'Learn cloud-native architecture patterns and master Kubernetes for scalable applications.',
+                category: 'cloud',
+                isLive: false,
+                hasAI: false
             },
             {
                 id: 6,
-                title: 'Docker and Kubernetes Tutorial for Beginners - DevOps Essentials',
+                title: 'Futuristic UI/UX Design Trends 2025',
+                thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=225&fit=crop',
+                channel: 'Design Pro',
+                channelInitial: 'D',
+                views: '2.1M views',
+                timestamp: '1 week ago',
+                duration: '18:45',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+                description: 'Explore the latest UI/UX design trends including glassmorphism, 3D elements, and AI-powered interfaces.',
+                category: 'design',
+                isLive: false,
+                hasAI: true
+            },
+            {
+                id: 7,
+                title: 'Web3 Development - Complete Blockchain Course',
+                thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=225&fit=crop',
+                channel: 'Blockchain Dev',
+                channelInitial: 'B',
+                views: '1.5M views',
+                timestamp: '4 days ago',
+                duration: '28:55',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+                description: 'Complete guide to Web3 development covering smart contracts, DApps, and decentralized systems.',
+                category: 'blockchain',
+                isLive: false,
+                hasAI: false
+            },
+            {
+                id: 8,
+                title: 'Advanced React 19 with AI Integration',
+                thumbnail: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=225&fit=crop',
+                channel: 'React Mastery',
+                channelInitial: 'R',
+                views: '2.7M views',
+                timestamp: '2 days ago',
+                duration: '35:15',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+                description: 'Learn React 19 with AI-powered features, server components, and next-gen performance optimizations.',
+                category: 'web-dev',
+                isLive: false,
+                hasAI: true
+            },
+            {
+                id: 9,
+                title: 'Data Science with AI - Python & Machine Learning',
+                thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=225&fit=crop',
+                channel: 'Data Science Hub',
+                channelInitial: 'D',
+                views: '3.2M views',
+                timestamp: '1 week ago',
+                duration: '42:30',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
+                description: 'Master data science with AI-powered tools, Python libraries, and advanced machine learning techniques.',
+                category: 'data-science',
+                isLive: false,
+                hasAI: true
+            },
+            {
+                id: 10,
+                title: 'DevOps 2025 - CI/CD with AI Automation',
                 thumbnail: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?w=400&h=225&fit=crop',
                 channel: 'DevOps Daily',
                 channelInitial: 'D',
                 views: '1.8M views',
-                timestamp: '2 weeks ago',
-                duration: '28:55',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-                description: 'Get started with containerization using Docker and orchestration with Kubernetes. Essential skills for modern DevOps engineers.',
-                category: 'devops',
-                isLive: false
-            },
-            {
-                id: 7,
-                title: 'Web Design Trends 2024 - What You Need to Know',
-                thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=225&fit=crop',
-                channel: 'Creative Studio',
-                channelInitial: 'C',
-                views: '654K views',
-                timestamp: '4 days ago',
-                duration: '12:30',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-                description: 'Explore the latest web design trends for 2024 including minimalism, dark mode, glassmorphism, micro-interactions, and more.',
-                category: 'design',
-                isLive: false
-            },
-            {
-                id: 8,
-                title: 'Building REST APIs with Express.js and MongoDB',
-                thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=225&fit=crop',
-                channel: 'Backend Basics',
-                channelInitial: 'B',
-                views: '1.1M views',
-                timestamp: '1 week ago',
-                duration: '25:40',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-                description: 'Learn how to build robust REST APIs using Express.js and MongoDB. Covers routing, middleware, authentication, error handling, and best practices.',
-                category: 'web-dev',
-                isLive: false
-            },
-            {
-                id: 9,
-                title: 'React Hooks Deep Dive - useState, useEffect, useContext and More',
-                thumbnail: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=225&fit=crop',
-                channel: 'React Mastery',
-                channelInitial: 'R',
-                views: '2.3M views',
                 timestamp: '3 days ago',
-                duration: '35:15',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-                description: 'Master React Hooks with this comprehensive guide. Learn useState, useEffect, useContext, useReducer, useMemo, useCallback, and custom hooks.',
-                category: 'web-dev',
-                isLive: false
-            },
-            {
-                id: 10,
-                title: 'TypeScript Crash Course 2024 - Complete Guide',
-                thumbnail: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&h=225&fit=crop',
-                channel: 'Type Safe Dev',
-                channelInitial: 'T',
-                views: '876K views',
-                timestamp: '6 days ago',
-                duration: '20:25',
+                duration: '25:40',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-                description: 'Quick and comprehensive TypeScript tutorial covering types, interfaces, generics, decorators, and advanced features for production applications.',
-                category: 'programming',
-                isLive: false
-            },
-            {
-                id: 11,
-                title: 'Git and GitHub for Beginners - Complete Tutorial',
-                thumbnail: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=225&fit=crop',
-                channel: 'Version Control Pro',
-                channelInitial: 'V',
-                views: '1.5M views',
-                timestamp: '2 weeks ago',
-                duration: '30:50',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
-                description: 'Complete guide to Git and GitHub for beginners. Learn version control, branching, merging, pull requests, and collaboration workflows.',
-                category: 'programming',
-                isLive: false
-            },
-            {
-                id: 12,
-                title: 'Responsive Web Design - Mobile First Approach',
-                thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop',
-                channel: 'Web Dev Simplified',
-                channelInitial: 'W',
-                views: '1.9M views',
-                timestamp: '1 month ago',
-                duration: '27:35',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
-                description: 'Learn responsive web design with a mobile-first approach. Covers media queries, flexible layouts, responsive images, and modern techniques.',
-                category: 'web-dev',
-                isLive: false
-            },
-            {
-                id: 13,
-                title: 'LIVE: Coding Challenge - Build a Todo App from Scratch',
-                thumbnail: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=225&fit=crop',
-                channel: 'Code Live',
-                channelInitial: 'C',
-                views: '12K watching',
-                timestamp: 'Started streaming 2 hours ago',
-                duration: 'LIVE',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                description: 'Join us live as we build a complete todo application from scratch using React and Firebase!',
-                category: 'programming',
-                isLive: true
-            },
-            {
-                id: 14,
-                title: 'AWS Cloud Computing Full Course - Beginner to Advanced',
-                thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=225&fit=crop',
-                channel: 'Cloud Academy',
-                channelInitial: 'C',
-                views: '2.8M views',
-                timestamp: '2 months ago',
-                duration: '3:45:20',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-                description: 'Complete AWS course covering EC2, S3, Lambda, RDS, and more. Perfect for cloud certification preparation.',
-                category: 'cloud',
-                isLive: false
-            },
-            {
-                id: 15,
-                title: 'Cybersecurity Fundamentals - Ethical Hacking Basics',
-                thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=225&fit=crop',
-                channel: 'Security First',
-                channelInitial: 'S',
-                views: '1.4M views',
-                timestamp: '3 weeks ago',
-                duration: '42:15',
-                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-                description: 'Learn cybersecurity fundamentals and ethical hacking basics. Covers network security, penetration testing, and security best practices.',
-                category: 'security',
-                isLive: false
+                description: 'Learn modern DevOps practices with AI-powered automation, intelligent monitoring, and predictive scaling.',
+                category: 'devops',
+                isLive: false,
+                hasAI: true
             }
         ];
 
-        let guideOpen = true;
+        let sidebarOpen = true;
         let currentVideo = null;
-        let currentCategory = 'all';
         let likeCount = 1200;
         let isLiked = false;
 
-        function toggleGuide() {
-            guideOpen = !guideOpen;
-            const guide = document.getElementById('guide-inner-content');
-            const pageManager = document.getElementById('page-manager');
-            const playerPage = document.getElementById('player-page');
+        function toggleSidebar() {
+            sidebarOpen = !sidebarOpen;
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const playerPage = document.getElementById('playerPage');
             
-            if (guideOpen) {
-                guide.classList.remove('hidden');
-                pageManager.classList.remove('guide-hidden');
-                playerPage.classList.remove('guide-hidden');
+            if (sidebarOpen) {
+                sidebar.classList.remove('closed');
+                mainContent.classList.remove('sidebar-closed');
+                playerPage.classList.remove('sidebar-closed');
             } else {
-                guide.classList.add('hidden');
-                pageManager.classList.add('guide-hidden');
-                playerPage.classList.add('guide-hidden');
+                sidebar.classList.add('closed');
+                mainContent.classList.add('sidebar-closed');
+                playerPage.classList.add('sidebar-closed');
             }
         }
 
-        function filterChip(element, category) {
-            currentCategory = category;
-            
-            document.querySelectorAll('.yt-chip').forEach(chip => {
+        function filterCategory(element, category) {
+            document.querySelectorAll('.chip').forEach(chip => {
                 chip.classList.remove('active');
             });
             element.classList.add('active');
@@ -1525,98 +1576,96 @@
         }
 
         function renderVideoGrid(videosToRender = videos) {
-            const contents = document.getElementById('contents');
-            contents.innerHTML = '';
+            const videoGrid = document.getElementById('videoGrid');
+            videoGrid.innerHTML = '';
             
             videosToRender.forEach(video => {
-                const item = document.createElement('ytd-rich-item-renderer');
-                item.innerHTML = `
-                    <div id="dismissible" onclick="playVideo(${video.id})">
-                        <ytd-thumbnail>
-                            <div id="thumbnail">
-                                <img src="${video.thumbnail}" alt="${video.title}">
-                                ${video.isLive ? '<div class="badge-style-type-live-now">LIVE</div>' : ''}
-                                <div id="time-status">${video.duration}</div>
-                            </div>
-                        </ytd-thumbnail>
-                        <div id="details">
-                            <div id="avatar">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Ccircle cx='18' cy='18' r='18' fill='%23667eea'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14' font-weight='500'%3E${video.channelInitial}%3C/text%3E%3C/svg%3E">
-                            </div>
-                            <div id="meta">
-                                <h3 id="video-title">${video.title}</h3>
-                                <div id="metadata-line">
-                                    <a id="channel-name">${video.channel}</a>
-                                    <div id="metadata">
-                                        <span class="inline-metadata-item">${video.views}</span>
-                                        <span class="inline-metadata-item">${video.timestamp}</span>
-                                    </div>
-                                </div>
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.onclick = () => playVideo(video);
+                
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}">
+                        ${video.isLive ? '<div class="live-badge">● LIVE</div>' : ''}
+                        ${video.hasAI ? '<div class="ai-badge">AI</div>' : ''}
+                        <div class="video-duration">${video.duration}</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="channel-avatar">${video.channelInitial}</div>
+                        <div class="video-details">
+                            <div class="video-title">${video.title}</div>
+                            <div class="video-channel">${video.channel}</div>
+                            <div class="video-meta">
+                                <span>${video.views}</span>
+                                <div class="meta-dot"></div>
+                                <span>${video.timestamp}</span>
                             </div>
                         </div>
                     </div>
                 `;
-                contents.appendChild(item);
+                
+                videoGrid.appendChild(videoCard);
             });
         }
 
-        function playVideo(videoId) {
-            currentVideo = videos.find(v => v.id === videoId);
-            if (!currentVideo) return;
+        function playVideo(video) {
+            currentVideo = video;
             
-            document.getElementById('page-manager').style.display = 'none';
-            document.getElementById('player-page').classList.add('active');
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('playerPage').classList.add('active');
             
-            const videoPlayer = document.getElementById('video-player');
-            videoPlayer.src = currentVideo.videoUrl;
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = video.videoUrl;
             
-            document.getElementById('video-title-player').textContent = currentVideo.title;
-            document.getElementById('img').textContent = currentVideo.channelInitial;
-            document.getElementById('channel-name-player').textContent = currentVideo.channel;
-            document.getElementById('views-player').textContent = currentVideo.views;
-            document.getElementById('date-player').textContent = currentVideo.timestamp;
-            document.getElementById('description-text').textContent = currentVideo.description;
+            document.getElementById('playerTitle').textContent = video.title;
+            document.getElementById('playerAvatar').textContent = video.channelInitial;
+            document.getElementById('playerChannel').textContent = video.channel;
+            document.getElementById('playerViews').textContent = video.views;
+            document.getElementById('playerDate').textContent = video.timestamp;
+            document.getElementById('playerDescription').textContent = video.description;
             
             renderRelatedVideos();
             window.scrollTo(0, 0);
         }
 
         function renderRelatedVideos() {
-            const secondary = document.getElementById('secondary');
-            secondary.innerHTML = '';
+            const relatedVideos = document.getElementById('relatedVideos');
+            relatedVideos.innerHTML = '';
             
-            const relatedVideos = videos.filter(v => v.id !== currentVideo.id).slice(0, 10);
+            const related = videos.filter(v => v.id !== currentVideo.id).slice(0, 8);
             
-            relatedVideos.forEach(video => {
-                const item = document.createElement('ytd-compact-video-renderer');
-                item.onclick = () => playVideo(video.id);
-                item.innerHTML = `
-                    <div id="thumbnail-compact">
+            related.forEach(video => {
+                const relatedVideo = document.createElement('div');
+                relatedVideo.className = 'related-video';
+                relatedVideo.onclick = () => playVideo(video);
+                
+                relatedVideo.innerHTML = `
+                    <div class="related-thumbnail">
                         <img src="${video.thumbnail}" alt="${video.title}">
-                        <div id="time-status-compact">${video.duration}</div>
                     </div>
-                    <div id="details-compact">
-                        <h3 id="video-title-compact">${video.title}</h3>
-                        <div id="channel-name-compact">${video.channel}</div>
-                        <div id="metadata-compact">${video.views} • ${video.timestamp}</div>
+                    <div class="related-info">
+                        <div class="related-title">${video.title}</div>
+                        <div class="related-channel">${video.channel}</div>
+                        <div class="related-meta">${video.views} • ${video.timestamp}</div>
                     </div>
                 `;
-                secondary.appendChild(item);
+                
+                relatedVideos.appendChild(relatedVideo);
             });
         }
 
         function showHome() {
-            document.getElementById('page-manager').style.display = 'block';
-            document.getElementById('player-page').classList.remove('active');
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('playerPage').classList.remove('active');
             
-            const videoPlayer = document.getElementById('video-player');
+            const videoPlayer = document.getElementById('videoPlayer');
             videoPlayer.pause();
             videoPlayer.src = '';
         }
 
-        function performSearch(e) {
-            e.preventDefault();
-            const searchInput = document.getElementById('search-input');
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
             const query = searchInput.value.toLowerCase().trim();
             
             if (query === '') {
@@ -1641,21 +1690,27 @@
                 likeCount--;
             }
             
-            const likeCountEl = document.getElementById('like-count-player');
+            const likeCountEl = document.getElementById('likeCount');
             likeCountEl.textContent = likeCount >= 1000 
                 ? (likeCount / 1000).toFixed(1) + 'K' 
                 : likeCount;
         }
 
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
         // Initialize
         renderVideoGrid();
 
-        // Handle responsive sidebar
+        // Responsive
         if (window.innerWidth <= 1024) {
-            guideOpen = false;
-            document.getElementById('guide-inner-content').classList.add('hidden');
-            document.getElementById('page-manager').classList.add('guide-hidden');
-            document.getElementById('player-page').classList.add('guide-hidden');
+            sidebarOpen = false;
+            document.getElementById('sidebar').classList.add('closed');
+            document.getElementById('mainContent').classList.add('sidebar-closed');
+            document.getElementById('playerPage').classList.add('sidebar-closed');
         }
     </script>
 </body>
