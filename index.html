@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Clone - Full Featured</title>
+    <title>YouTube Clone - Modern & Complete</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,10 +14,50 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #181818;
+            --bg-hover: #272727;
+            --bg-active: #3f3f3f;
+            --text-primary: #fff;
+            --text-secondary: #aaa;
+            --border-color: #303030;
+            --accent-color: #3ea6ff;
+            --red-color: #ff0000;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0f0f0f;
-            color: #fff;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body.light-mode {
+            --bg-primary: #f9f9f9;
+            --bg-secondary: #fff;
+            --bg-hover: #f2f2f2;
+            --bg-active: #e5e5e5;
+            --text-primary: #0f0f0f;
+            --text-secondary: #606060;
+            --border-color: #e5e5e5;
+        }
+
+        /* Smooth Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Header */
@@ -27,13 +67,19 @@
             left: 0;
             right: 0;
             height: 56px;
-            background-color: #0f0f0f;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
             z-index: 1000;
-            border-bottom: 1px solid #303030;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        body.light-mode .header {
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .header-left {
@@ -42,21 +88,22 @@
             gap: 16px;
         }
 
-        .menu-btn {
+        .menu-btn, .icon-btn {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             background: none;
             border: none;
-            color: #fff;
+            color: var(--text-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition);
         }
 
-        .menu-btn:hover {
-            background-color: #2a2a2a;
+        .menu-btn:hover, .icon-btn:hover {
+            background-color: var(--bg-hover);
         }
 
         .logo {
@@ -64,6 +111,11 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .header-center {
@@ -79,39 +131,42 @@
             flex: 1;
             display: flex;
             height: 40px;
+            position: relative;
         }
 
         .search-input {
             flex: 1;
-            background-color: #121212;
-            border: 1px solid #303030;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-right: none;
             border-radius: 40px 0 0 40px;
             padding: 0 16px;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 16px;
             outline: none;
+            transition: var(--transition);
         }
 
         .search-input:focus {
-            border-color: #1c62b9;
+            border-color: var(--accent-color);
         }
 
         .search-btn {
             width: 64px;
-            background-color: #222;
-            border: 1px solid #303030;
+            background-color: var(--bg-hover);
+            border: 1px solid var(--border-color);
             border-left: none;
             border-radius: 0 40px 40px 0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--text-primary);
+            transition: var(--transition);
         }
 
         .search-btn:hover {
-            background-color: #2a2a2a;
+            background-color: var(--bg-active);
         }
 
         .header-right {
@@ -120,34 +175,48 @@
             gap: 8px;
         }
 
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .icon-btn:hover {
-            background-color: #2a2a2a;
-        }
-
         .user-avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #f44336;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background-color: var(--bg-hover);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--text-primary);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        body.light-mode .theme-toggle-slider {
+            transform: translateX(26px);
         }
 
         /* Sidebar */
@@ -157,10 +226,11 @@
             top: 56px;
             bottom: 0;
             width: 240px;
-            background-color: #0f0f0f;
+            background-color: var(--bg-primary);
             overflow-y: auto;
-            transition: transform 0.2s;
+            transition: var(--transition);
             z-index: 900;
+            animation: slideIn 0.3s ease-out;
         }
 
         .sidebar.closed {
@@ -171,21 +241,46 @@
             padding: 12px 0;
         }
 
+        .sidebar-section {
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section-title {
+            padding: 8px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar-item {
             display: flex;
             align-items: center;
             padding: 10px 24px;
             cursor: pointer;
-            color: #fff;
-            transition: background-color 0.2s;
+            color: var(--text-primary);
+            transition: var(--transition);
+            position: relative;
         }
 
         .sidebar-item:hover {
-            background-color: #272727;
+            background-color: var(--bg-hover);
         }
 
         .sidebar-item.active {
-            background-color: #272727;
+            background-color: var(--bg-hover);
+            font-weight: 500;
+        }
+
+        .sidebar-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--red-color);
         }
 
         .sidebar-icon {
@@ -198,8 +293,45 @@
 
         .sidebar-divider {
             height: 1px;
-            background-color: #303030;
+            background-color: var(--border-color);
             margin: 12px 0;
+        }
+
+        /* Category Chips */
+        .category-chips {
+            position: sticky;
+            top: 56px;
+            background-color: var(--bg-primary);
+            padding: 16px 0;
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+
+        .category-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 12px;
+            background-color: var(--bg-hover);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .chip:hover {
+            background-color: var(--bg-active);
+        }
+
+        .chip.active {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
         }
 
         /* Main Content */
@@ -207,7 +339,8 @@
             margin-left: 240px;
             margin-top: 56px;
             padding: 24px;
-            transition: margin-left 0.2s;
+            transition: var(--transition);
+            min-height: calc(100vh - 56px);
         }
 
         .main-content.sidebar-closed {
@@ -219,24 +352,31 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .video-card {
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: var(--transition);
+            animation: fadeIn 0.5s ease-out;
         }
 
         .video-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-4px);
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
         }
 
         .video-thumbnail {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%;
-            background-color: #181818;
+            background-color: var(--bg-secondary);
             border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .video-thumbnail img {
@@ -246,18 +386,32 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: var(--transition);
         }
 
         .video-duration {
             position: absolute;
             bottom: 8px;
             right: 8px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             color: #fff;
-            padding: 3px 6px;
+            padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 600;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: var(--red-color);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
         }
 
         .video-info {
@@ -271,12 +425,17 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: #f44336;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
             font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .channel-avatar:hover {
+            transform: scale(1.1);
         }
 
         .video-details {
@@ -289,7 +448,7 @@
             font-weight: 500;
             line-height: 1.4;
             margin: 0 0 4px 0;
-            color: #fff;
+            color: var(--text-primary);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -298,19 +457,20 @@
 
         .video-channel {
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-secondary);
             margin: 0 0 2px 0;
         }
 
         .video-meta {
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-secondary);
             margin: 0;
         }
 
         /* Video Player Page */
         .video-player-page {
             display: none;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .video-player-page.active {
@@ -323,16 +483,17 @@
             gap: 8px;
             background: none;
             border: none;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 14px;
             cursor: pointer;
             padding: 8px 12px;
             margin-bottom: 16px;
             border-radius: 8px;
+            transition: var(--transition);
         }
 
         .back-btn:hover {
-            background-color: #272727;
+            background-color: var(--bg-hover);
         }
 
         .video-player-layout {
@@ -347,6 +508,7 @@
             border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16/9;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
 
         .video-player video {
@@ -371,7 +533,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #303030;
+            border-bottom: 1px solid var(--border-color);
             margin-bottom: 12px;
         }
 
@@ -385,7 +547,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: #f44336;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -396,27 +558,29 @@
         .channel-name {
             font-size: 14px;
             font-weight: 500;
-            color: #fff;
+            color: var(--text-primary);
         }
 
         .subscriber-count {
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-secondary);
         }
 
         .subscribe-btn {
-            background-color: #fff;
-            color: #000;
+            background-color: var(--red-color);
+            color: #fff;
             border: none;
             padding: 10px 16px;
             border-radius: 24px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             margin-left: 12px;
+            transition: var(--transition);
         }
 
         .subscribe-btn:hover {
-            background-color: #e0e0e0;
+            background-color: #cc0000;
+            transform: scale(1.05);
         }
 
         .action-buttons {
@@ -428,33 +592,159 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background-color: #272727;
+            background-color: var(--bg-hover);
             border: none;
-            color: #fff;
+            color: var(--text-primary);
             padding: 10px 16px;
             border-radius: 24px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
         .action-btn:hover {
-            background-color: #3f3f3f;
+            background-color: var(--bg-active);
+            transform: scale(1.05);
         }
 
         .video-description {
-            background-color: #272727;
+            background-color: var(--bg-hover);
             padding: 16px;
             border-radius: 12px;
             margin-bottom: 24px;
         }
 
+        .description-header {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
         .description-text {
             font-size: 14px;
             line-height: 1.6;
-            color: #fff;
+            color: var(--text-primary);
             margin: 0;
         }
 
+        /* Comments Section */
+        .comments-section {
+            margin-top: 24px;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .comments-count {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .sort-comments {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .comment-input-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .comment-input {
+            flex: 1;
+            background: none;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 8px 0;
+            outline: none;
+        }
+
+        .comment-input:focus {
+            border-bottom-color: var(--text-primary);
+        }
+
+        .comment {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .comment-author {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .comment-time {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 8px 0;
+        }
+
+        .comment-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .comment-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .comment-action:hover {
+            color: var(--text-primary);
+        }
+
+        /* Related Videos */
         .related-videos {
             overflow-y: auto;
             max-height: calc(100vh - 100px);
@@ -467,10 +757,11 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 8px;
+            transition: var(--transition);
         }
 
         .related-video:hover {
-            background-color: #272727;
+            background-color: var(--bg-hover);
         }
 
         .related-thumbnail {
@@ -479,7 +770,7 @@
             border-radius: 8px;
             overflow: hidden;
             flex-shrink: 0;
-            background-color: #181818;
+            background-color: var(--bg-secondary);
         }
 
         .related-thumbnail img {
@@ -506,16 +797,167 @@
 
         .related-channel {
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-secondary);
             margin: 0 0 2px 0;
         }
 
         .related-meta {
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-secondary);
             margin: 0;
         }
 
+        /* Shorts Section */
+        .shorts-section {
+            margin: 48px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .shorts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .short-card {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .short-card:hover {
+            transform: scale(1.05);
+        }
+
+        .short-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 177.78%;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .short-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .short-views {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .short-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Skeleton Loader */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-hover) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            margin-bottom: 24px;
+        }
+
+        .skeleton-thumbnail {
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+
+        .skeleton-text.short {
+            width: 60%;
+        }
+
+        /* Notification Panel */
+        .notification-panel {
+            position: fixed;
+            top: 56px;
+            right: 16px;
+            width: 400px;
+            max-height: 600px;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: none;
+            z-index: 1001;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .notification-panel.active {
+            display: block;
+        }
+
+        .notification-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+
+        .notification-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .notification-item:hover {
+            background-color: var(--bg-hover);
+        }
+
+        .notification-item.unread {
+            background-color: rgba(62, 166, 255, 0.1);
+        }
+
+        /* Responsive */
         @media (max-width: 1200px) {
             .video-player-layout {
                 grid-template-columns: 1fr;
@@ -538,6 +980,29 @@
             .header-center {
                 margin: 0 16px;
             }
+
+            .notification-panel {
+                width: calc(100vw - 32px);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-hover);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--bg-active);
         }
     </style>
 </head>
@@ -570,12 +1035,15 @@
         </div>
         
         <div class="header-right">
+            <div class="theme-toggle" onclick="toggleTheme()">
+                <div class="theme-toggle-slider"></div>
+            </div>
             <button class="icon-btn">
                 <svg viewBox="0 0 24 24" width="24" height="24">
                     <path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
                 </svg>
             </button>
-            <button class="icon-btn">
+            <button class="icon-btn" onclick="toggleNotifications()">
                 <svg viewBox="0 0 24 24" width="24" height="24">
                     <path fill="currentColor" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
                 </svg>
@@ -584,65 +1052,107 @@
         </div>
     </header>
 
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">Notifications</div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="channel-avatar">T</div>
+                <div>
+                    <div style="font-size: 14px; margin-bottom: 4px;">
+                        <strong>Tech Academy</strong> uploaded: New React Tutorial
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">2 hours ago</div>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="channel-avatar">C</div>
+                <div>
+                    <div style="font-size: 14px; margin-bottom: 4px;">
+                        <strong>Code Masters</strong> uploaded: JavaScript Tips
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">1 day ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <nav class="sidebar-nav">
-            <div class="sidebar-item active">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M12 4.44l-6 5.4V19h4v-5h4v5h4v-9.16l-6-5.4M12 3l8 7.2V21h-6v-5h-4v5H4v-10.8L12 3z"/>
-                    </svg>
+            <div class="sidebar-section">
+                <div class="sidebar-item active" onclick="showPage('home')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M12 4.44l-6 5.4V19h4v-5h4v5h4v-9.16l-6-5.4M12 3l8 7.2V21h-6v-5h-4v5H4v-10.8L12 3z"/>
+                        </svg>
+                    </div>
+                    <span>Home</span>
                 </div>
-                <span>Home</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25z"/>
-                    </svg>
+                <div class="sidebar-item" onclick="showPage('shorts')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25z"/>
+                        </svg>
+                    </div>
+                    <span>Shorts</span>
                 </div>
-                <span>Shorts</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"/>
-                    </svg>
+                <div class="sidebar-item" onclick="showPage('subscriptions')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"/>
+                        </svg>
+                    </div>
+                    <span>Subscriptions</span>
                 </div>
-                <span>Subscriptions</span>
             </div>
+            
             <div class="sidebar-divider"></div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M11 7l-3 3 3 3V7zm13 3l-3-3v6l3-3zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
-                    </svg>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Library</div>
+                <div class="sidebar-item" onclick="showPage('history')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </div>
+                    <span>History</span>
                 </div>
-                <span>Library</span>
+                <div class="sidebar-item" onclick="showPage('watch-later')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </div>
+                    <span>Watch Later</span>
+                </div>
+                <div class="sidebar-item" onclick="showPage('liked')">
+                    <div class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                        </svg>
+                    </div>
+                    <span>Liked videos</span>
+                </div>
             </div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                    </svg>
+            
+            <div class="sidebar-divider"></div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Subscriptions</div>
+                <div class="sidebar-item">
+                    <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 24px;">T</div>
+                    <span>Tech Academy</span>
                 </div>
-                <span>History</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                    </svg>
+                <div class="sidebar-item">
+                    <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 24px;">C</div>
+                    <span>Code Masters</span>
                 </div>
-                <span>Watch Later</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                    </svg>
+                <div class="sidebar-item">
+                    <div class="channel-avatar" style="width: 24px; height: 24px; font-size: 12px; margin-right: 24px;">D</div>
+                    <span>Design Pro</span>
                 </div>
-                <span>Liked videos</span>
             </div>
         </nav>
     </aside>
@@ -651,7 +1161,31 @@
     <main class="main-content" id="mainContent">
         <!-- Home Page -->
         <div id="homePage">
+            <!-- Category Chips -->
+            <div class="category-chips">
+                <span class="chip active" onclick="filterCategory('all')">All</span>
+                <span class="chip" onclick="filterCategory('programming')">Programming</span>
+                <span class="chip" onclick="filterCategory('design')">Design</span>
+                <span class="chip" onclick="filterCategory('data-science')">Data Science</span>
+                <span class="chip" onclick="filterCategory('ai')">AI & ML</span>
+                <span class="chip" onclick="filterCategory('devops')">DevOps</span>
+                <span class="chip" onclick="filterCategory('web-dev')">Web Development</span>
+                <span class="chip" onclick="filterCategory('mobile')">Mobile Dev</span>
+            </div>
+
+            <!-- Video Grid -->
             <div class="video-grid" id="videoGrid"></div>
+
+            <!-- Shorts Section -->
+            <div class="shorts-section">
+                <div class="section-header">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="#FF0000">
+                        <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25z"/>
+                    </svg>
+                    <h2 class="section-title">Shorts</h2>
+                </div>
+                <div class="shorts-grid" id="shortsGrid"></div>
+            </div>
         </div>
 
         <!-- Video Player Page -->
@@ -660,7 +1194,7 @@
                 <svg viewBox="0 0 24 24" width="24" height="24">
                     <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                 </svg>
-                Back
+                Back to Home
             </button>
             
             <div class="video-player-layout">
@@ -686,11 +1220,11 @@
                             </div>
                             
                             <div class="action-buttons">
-                                <button class="action-btn">
+                                <button class="action-btn" onclick="likeVideo()">
                                     <svg viewBox="0 0 24 24" width="24" height="24">
                                         <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
                                     </svg>
-                                    <span>Like</span>
+                                    <span id="likeCount">1.2K</span>
                                 </button>
                                 <button class="action-btn">
                                     <svg viewBox="0 0 24 24" width="24" height="24">
@@ -708,7 +1242,106 @@
                         </div>
                         
                         <div class="video-description">
+                            <div class="description-header">
+                                <span id="playerViews"></span>
+                                <span id="playerTimestamp"></span>
+                            </div>
                             <p class="description-text" id="playerDescription"></p>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+                            <div class="comments-header">
+                                <span class="comments-count">156 Comments</span>
+                                <div class="sort-comments">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/>
+                                    </svg>
+                                    Sort by
+                                </div>
+                            </div>
+
+                            <div class="comment-input-container">
+                                <div class="channel-avatar">AP</div>
+                                <input type="text" class="comment-input" placeholder="Add a comment...">
+                            </div>
+
+                            <div id="commentsList">
+                                <div class="comment">
+                                    <div class="comment-avatar">J</div>
+                                    <div class="comment-content">
+                                        <div class="comment-header">
+                                            <span class="comment-author">John Doe</span>
+                                            <span class="comment-time">2 days ago</span>
+                                        </div>
+                                        <p class="comment-text">This is an amazing tutorial! Really helped me understand the concepts better. Thanks for sharing!</p>
+                                        <div class="comment-actions">
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                                </svg>
+                                                <span>24</span>
+                                            </div>
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="comment-action">Reply</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment">
+                                    <div class="comment-avatar">S</div>
+                                    <div class="comment-content">
+                                        <div class="comment-header">
+                                            <span class="comment-author">Sarah Smith</span>
+                                            <span class="comment-time">1 week ago</span>
+                                        </div>
+                                        <p class="comment-text">Perfect timing! I was just looking for something like this. Subscribed!</p>
+                                        <div class="comment-actions">
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                                </svg>
+                                                <span>12</span>
+                                            </div>
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="comment-action">Reply</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment">
+                                    <div class="comment-avatar">M</div>
+                                    <div class="comment-content">
+                                        <div class="comment-header">
+                                            <span class="comment-author">Mike Johnson</span>
+                                            <span class="comment-time">3 days ago</span>
+                                        </div>
+                                        <p class="comment-text">Could you make a follow-up video covering advanced topics? This was great!</p>
+                                        <div class="comment-actions">
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                                                </svg>
+                                                <span>8</span>
+                                            </div>
+                                            <div class="comment-action">
+                                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                                    <path fill="currentColor" d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="comment-action">Reply</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -729,7 +1362,9 @@
                 timestamp: '2 days ago',
                 duration: '15:30',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                description: 'Learn how to build a complete full-stack application using React for the frontend and Node.js for the backend. This comprehensive tutorial covers everything from setup to deployment.'
+                description: 'Learn how to build a complete full-stack application using React for the frontend and Node.js for the backend. This comprehensive tutorial covers everything from setup to deployment, including authentication, database integration, and best practices.',
+                category: 'programming',
+                isLive: false
             },
             {
                 id: 2,
@@ -740,7 +1375,9 @@
                 timestamp: '1 week ago',
                 duration: '22:15',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-                description: 'Deep dive into advanced JavaScript concepts including closures, promises, async/await, and more. Perfect for intermediate developers looking to level up.'
+                description: 'Deep dive into advanced JavaScript concepts including closures, promises, async/await, and more. Perfect for intermediate developers looking to level up their skills.',
+                category: 'programming',
+                isLive: false
             },
             {
                 id: 3,
@@ -751,7 +1388,9 @@
                 timestamp: '3 weeks ago',
                 duration: '18:45',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                description: 'Master modern CSS layout techniques with this complete guide to CSS Grid and Flexbox. Learn when to use each and how to combine them effectively.'
+                description: 'Master modern CSS layout techniques with this complete guide to CSS Grid and Flexbox. Learn when to use each and how to combine them effectively.',
+                category: 'design',
+                isLive: false
             },
             {
                 id: 4,
@@ -762,7 +1401,9 @@
                 timestamp: '1 month ago',
                 duration: '45:20',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-                description: 'Complete Python course for data science covering NumPy, Pandas, Matplotlib, and machine learning basics. Perfect for aspiring data scientists.'
+                description: 'Complete Python course for data science covering NumPy, Pandas, Matplotlib, and machine learning basics. Perfect for aspiring data scientists.',
+                category: 'data-science',
+                isLive: false
             },
             {
                 id: 5,
@@ -773,7 +1414,9 @@
                 timestamp: '5 days ago',
                 duration: '32:10',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-                description: 'Understanding machine learning from the ground up. Learn about supervised learning, unsupervised learning, and neural networks.'
+                description: 'Understanding machine learning from the ground up. Learn about supervised learning, unsupervised learning, and neural networks.',
+                category: 'ai',
+                isLive: false
             },
             {
                 id: 6,
@@ -784,7 +1427,9 @@
                 timestamp: '2 weeks ago',
                 duration: '28:55',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-                description: 'Get started with containerization using Docker and orchestration with Kubernetes. Essential skills for modern DevOps engineers.'
+                description: 'Get started with containerization using Docker and orchestration with Kubernetes. Essential skills for modern DevOps engineers.',
+                category: 'devops',
+                isLive: false
             },
             {
                 id: 7,
@@ -795,7 +1440,9 @@
                 timestamp: '4 days ago',
                 duration: '12:30',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-                description: 'Explore the latest web design trends for 2024 including minimalism, dark mode, micro-interactions, and more.'
+                description: 'Explore the latest web design trends for 2024 including minimalism, dark mode, micro-interactions, and more.',
+                category: 'design',
+                isLive: false
             },
             {
                 id: 8,
@@ -806,7 +1453,9 @@
                 timestamp: '1 week ago',
                 duration: '25:40',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-                description: 'Learn how to build robust REST APIs using Express.js. Covers routing, middleware, authentication, and best practices.'
+                description: 'Learn how to build robust REST APIs using Express.js. Covers routing, middleware, authentication, and best practices.',
+                category: 'web-dev',
+                isLive: false
             },
             {
                 id: 9,
@@ -817,7 +1466,9 @@
                 timestamp: '3 days ago',
                 duration: '35:15',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-                description: 'Master React Hooks with this comprehensive guide. Learn useState, useEffect, useContext, useReducer, and custom hooks.'
+                description: 'Master React Hooks with this comprehensive guide. Learn useState, useEffect, useContext, useReducer, and custom hooks.',
+                category: 'web-dev',
+                isLive: false
             },
             {
                 id: 10,
@@ -828,7 +1479,9 @@
                 timestamp: '6 days ago',
                 duration: '20:25',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-                description: 'Quick and comprehensive TypeScript tutorial covering types, interfaces, generics, and advanced features.'
+                description: 'Quick and comprehensive TypeScript tutorial covering types, interfaces, generics, and advanced features.',
+                category: 'programming',
+                isLive: false
             },
             {
                 id: 11,
@@ -839,7 +1492,9 @@
                 timestamp: '2 weeks ago',
                 duration: '30:50',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
-                description: 'Complete guide to Git and GitHub for beginners. Learn version control, branching, merging, and collaboration.'
+                description: 'Complete guide to Git and GitHub for beginners. Learn version control, branching, merging, and collaboration.',
+                category: 'programming',
+                isLive: false
             },
             {
                 id: 12,
@@ -850,12 +1505,39 @@
                 timestamp: '1 month ago',
                 duration: '27:35',
                 videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
-                description: 'Learn responsive web design with a mobile-first approach. Covers media queries, flexible layouts, and modern techniques.'
+                description: 'Learn responsive web design with a mobile-first approach. Covers media queries, flexible layouts, and modern techniques.',
+                category: 'web-dev',
+                isLive: false
+            },
+            {
+                id: 13,
+                title: 'LIVE: Coding Challenge - Build a Todo App',
+                thumbnail: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=225&fit=crop',
+                channel: 'Code Live',
+                views: '12K watching',
+                timestamp: 'Live now',
+                duration: 'LIVE',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                description: 'Join us live as we build a complete todo application from scratch!',
+                category: 'programming',
+                isLive: true
             }
+        ];
+
+        const shorts = [
+            { id: 101, title: 'Quick CSS Tip #1', thumbnail: 'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=200&h=355&fit=crop', views: '2.5M views' },
+            { id: 102, title: 'JavaScript in 60 seconds', thumbnail: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=200&h=355&fit=crop', views: '1.8M views' },
+            { id: 103, title: 'React Hook Explained', thumbnail: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=200&h=355&fit=crop', views: '3.2M views' },
+            { id: 104, title: 'Python One-Liner', thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=200&h=355&fit=crop', views: '1.5M views' },
+            { id: 105, title: 'Git Command Hack', thumbnail: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=200&h=355&fit=crop', views: '900K views' },
+            { id: 106, title: 'Design Principle', thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=200&h=355&fit=crop', views: '1.2M views' }
         ];
 
         let sidebarOpen = true;
         let currentVideo = null;
+        let currentCategory = 'all';
+        let likeCount = 1200;
+        let isLiked = false;
 
         function toggleSidebar() {
             sidebarOpen = !sidebarOpen;
@@ -871,13 +1553,40 @@
             }
         }
 
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notificationPanel');
+            panel.classList.toggle('active');
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update active chip
+            document.querySelectorAll('.chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter videos
+            const filteredVideos = category === 'all' 
+                ? videos 
+                : videos.filter(v => v.category === category);
+            
+            renderVideoGrid(filteredVideos);
+        }
+
         function renderVideoGrid(videosToRender = videos) {
             const videoGrid = document.getElementById('videoGrid');
             videoGrid.innerHTML = '';
             
-            videosToRender.forEach(video => {
+            videosToRender.forEach((video, index) => {
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
+                videoCard.style.animationDelay = `${index * 0.05}s`;
                 videoCard.onclick = () => playVideo(video);
                 
                 const channelInitial = video.channel.charAt(0);
@@ -885,6 +1594,7 @@
                 videoCard.innerHTML = `
                     <div class="video-thumbnail">
                         <img src="${video.thumbnail}" alt="${video.title}">
+                        ${video.isLive ? '<span class="live-badge">LIVE</span>' : ''}
                         <span class="video-duration">${video.duration}</span>
                     </div>
                     <div class="video-info">
@@ -901,6 +1611,26 @@
             });
         }
 
+        function renderShorts() {
+            const shortsGrid = document.getElementById('shortsGrid');
+            shortsGrid.innerHTML = '';
+            
+            shorts.forEach(short => {
+                const shortCard = document.createElement('div');
+                shortCard.className = 'short-card';
+                
+                shortCard.innerHTML = `
+                    <div class="short-thumbnail">
+                        <img src="${short.thumbnail}" alt="${short.title}">
+                        <div class="short-views">${short.views}</div>
+                    </div>
+                    <div class="short-title">${short.title}</div>
+                `;
+                
+                shortsGrid.appendChild(shortCard);
+            });
+        }
+
         function playVideo(video) {
             currentVideo = video;
             
@@ -914,15 +1644,17 @@
             document.getElementById('playerChannelName').textContent = video.channel;
             document.getElementById('playerChannelAvatar').textContent = video.channel.charAt(0);
             document.getElementById('playerDescription').textContent = video.description;
+            document.getElementById('playerViews').textContent = video.views;
+            document.getElementById('playerTimestamp').textContent = video.timestamp;
             
             renderRelatedVideos();
         }
 
         function renderRelatedVideos() {
             const relatedVideosContainer = document.getElementById('relatedVideos');
-            relatedVideosContainer.innerHTML = '<h3 style="margin-bottom: 16px;">Related Videos</h3>';
+            relatedVideosContainer.innerHTML = '<h3 style="margin-bottom: 16px; font-size: 18px;">Related Videos</h3>';
             
-            const relatedVideos = videos.filter(v => v.id !== currentVideo.id).slice(0, 5);
+            const relatedVideos = videos.filter(v => v.id !== currentVideo.id).slice(0, 8);
             
             relatedVideos.forEach(video => {
                 const relatedVideo = document.createElement('div');
@@ -953,6 +1685,17 @@
             videoPlayer.src = '';
         }
 
+        function showPage(page) {
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-item').classList.add('active');
+            
+            // For now, just show home
+            showHome();
+        }
+
         function performSearch() {
             const searchInput = document.getElementById('searchInput');
             const query = searchInput.value.toLowerCase().trim();
@@ -964,10 +1707,25 @@
             
             const filteredVideos = videos.filter(video => 
                 video.title.toLowerCase().includes(query) ||
-                video.channel.toLowerCase().includes(query)
+                video.channel.toLowerCase().includes(query) ||
+                video.description.toLowerCase().includes(query)
             );
             
             renderVideoGrid(filteredVideos);
+        }
+
+        function likeVideo() {
+            isLiked = !isLiked;
+            if (isLiked) {
+                likeCount++;
+            } else {
+                likeCount--;
+            }
+            
+            const likeCountEl = document.getElementById('likeCount');
+            likeCountEl.textContent = likeCount >= 1000 
+                ? (likeCount / 1000).toFixed(1) + 'K' 
+                : likeCount;
         }
 
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
@@ -976,7 +1734,19 @@
             }
         });
 
+        // Close notification panel when clicking outside
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('notificationPanel');
+            const notifBtn = e.target.closest('.icon-btn');
+            
+            if (!panel.contains(e.target) && !notifBtn) {
+                panel.classList.remove('active');
+            }
+        });
+
+        // Initialize
         renderVideoGrid();
+        renderShorts();
     </script>
 </body>
 </html>
